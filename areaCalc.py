@@ -56,6 +56,9 @@ for i in range(0,len(results)):
     #
         column = df[:,1]
         columnMean = df[:,2]
+        columnStdev = df[:,3]
+        columnMin = df[:,4]
+        columnMax = df[:,5]
      #   print(len(column))
        # print(len(columnMean))
 ## Not using Pandas so commenting out
@@ -68,30 +71,19 @@ for i in range(0,len(results)):
       
         # area
         values=np.real(np.asarray(column))
-        lenVec=len(values)
-        realz=np.argwhere(np.isnan(values)==False)
-        nr=values[realz]
-        meanVal=np.mean(nr)
-# mean 
-        #columnMean=df.iloc[:,2]
-        valuesMean=np.real(np.asarray(columnMean))
-        lenVecMean=len(valuesMean)
-        realzMean=np.argwhere(np.isnan(valuesMean)==False)
-        nrMean=values[realzMean]
-        meanMeanVal=np.mean(nrMean)
-        means=np.squeeze(nrMean)
-        areas=np.squeeze(nr)
-        vecLenM=len(means)
-        vecLenA=len(areas)
-       # print(vecLenM)
-      #  print(vecLenA)
+        cRegions=column[1::]
+        cPixel=columnMean[1::]
+        cStd=columnStdev[1::]
+        cMin=columnMin[1::]
+        cMax=columnMax[1::]
+        sumPix=np.sum(cPixel)
+        sumReg=np.sum(cRegions)
+        combinedPixReg=np.multiply(cRegions,cPixel)
+        sumPixReg=np.sum(combinedPixReg)
+        averVPS=sumPixReg/sumReg
 
-        valuePerAreaArray=np.multiply(means,areas)
-       # print(valuePerAreaArray)
-        totalVPASum=np.sum(valuePerAreaArray)
-        areaSum=np.sum(areas)
-        valueSum=np.sum(means)
-        averVPS=totalVPASum/areaSum
+        lenVec=len(values)
+
         print(averVPS)
         #rl=np.argwhere(np.isnan(values)==True)
         #loc1=rl[-2]
@@ -101,25 +93,37 @@ for i in range(0,len(results)):
 
 
               #    'TotalArea: ', areaSum, 'TotalValue: ', valueSum]
-
+        
         A = np.vstack([df, newrow])
 
-        newrow=['TotalArea: ', areaSum, '','','','']
+        newrow=['TotalArea: ', sumReg, '','','','']
         A = np.vstack([A, newrow])
 
-        newrow=['TotalValue: ', valueSum, '','','','']
+        newrow=['TotalValue: ', sumPix, '','','','']
         A = np.vstack([A, newrow])
-        newrow=['MeanValue: ', meanMeanVal, '','','','']
+        newrow=['MeanValue: ', np.mean(cPixel), '','','','']
         A = np.vstack([A, newrow])
-    
-        outString='processed_'+nameFile
+
+            
+        outString='processed_'+nameFile+'.xlsx'
         print(outString)
-        np.savetxt(outString, A, delimiter='\t', fmt="%s")
-      #  df.loc[(lenVec+1)] = ['','','','Average:','','']
-       # df.loc[(lenVec+2)] = ['','','',meanVal,'','']
-       # df.loc[(lenVec+3)] = ['','','','Stand Dev:','','']
-       # df.loc[(lenVec+4)] = ['','','',np.std(nr),'','']
 
+        data={
+              'Area':cRegions,
+              'Mean':cPixel,
+              'StdDev':cStd,
+              'Min':cMin,
+              'Max':cMax
+              }
+
+        df2=pd.DataFrame(data)        
+        #np.savetxt(outString, A, delimiter='\t', fmt="%s")
+        df2.loc[(lenVec+1)] = ['','Mean Value per Area',averVPS,'','']
+        df2.loc[(lenVec+2)] = ['','Total Area',sumReg,'','']
+        df2.loc[(lenVec+3)] = ['','Mean Value',np.mean(cPixel),'','']
+        df2.loc[(lenVec+4)] = ['','Mean Area',np.mean(cRegions),'','']
+        outFile='unkS.xlsx'
+        df2.to_excel(outString)
 #writer = pd.ExcelWriter('.', engine = 'xlsxwriter')
 #dfbk.to_excel("testFiles.xls",sheet_name=first)
  #       df.to_excel(nameFile,sheet_name=first)
