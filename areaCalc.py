@@ -11,41 +11,12 @@ folder='.'
 
 results=list()
 results += [each for each in os.listdir(folder) if each.endswith(tag)]
-
-y_list_of_items=results
-
-element = 'ing'
-for item in y_list_of_items:
-    if element in item:
-        y_list_of_items.remove(item)
-
-print(y_list_of_items)
-       
-results=y_list_of_items
-
-element = 'Graph'
-for item in y_list_of_items:
-    if element in item:
-        y_list_of_items.remove(item)
-
-print(y_list_of_items)
-       
-results=y_list_of_items
-
-y_list_of_items=results
-
-element = 'graph'
-for item in y_list_of_items:
-    if element in item:
-        y_list_of_items.remove(item)
-
-print(y_list_of_items)
-       
-results=y_list_of_items
+#results=results.sort()
 
 print(results)
-for i in range(0,len(results)):
-        nameFile=results[i]
+
+for iy in range(0,len(results)):
+        nameFile=results[iy]
 
 #nameFile='testFiles.xls' #
         print(nameFile)
@@ -101,11 +72,12 @@ for i in range(0,len(results)):
 
         newrow=['TotalValue: ', sumPix, '','','','']
         A = np.vstack([A, newrow])
+        
         newrow=['MeanValue: ', np.mean(cPixel), '','','','']
         A = np.vstack([A, newrow])
 
             
-        outString='processed_'+nameFile+'.xlsx'
+        outString='processed '+nameFile+'.xlsx'
         print(outString)
 
         data={
@@ -121,7 +93,7 @@ for i in range(0,len(results)):
         df2.loc[(lenVec+1)] = ['','Mean Value per Area',averVPS,'','']
         df2.loc[(lenVec+2)] = ['','Total Area',sumReg,'','']
         df2.loc[(lenVec+3)] = ['','Mean Value',np.mean(cPixel),'','']
-        df2.loc[(lenVec+4)] = ['','Mean Area',np.mean(cRegions),'','']
+        #df2.loc[(lenVec+4)] = ['','Mean Area',np.mean(cRegions),'','']
         outFile='unkS.xlsx'
         df2.to_excel(outString)
 #writer = pd.ExcelWriter('.', engine = 'xlsxwriter')
