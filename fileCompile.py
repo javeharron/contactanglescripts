@@ -25,7 +25,7 @@ for iy in range(0,len(results)):
 
 #nameFile='testFiles.xls' #
         print(nameFile)
-        df = pd.read_excel(nameFile, delimiter="\t")
+        df = pd.read_excel(nameFile)
         dfO = df.tail(3)
        # print(dfO)
         meanVPA=dfO.iloc[0,3]
