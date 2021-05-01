@@ -11,10 +11,9 @@ folder='.'
 
 results=list()
 results += [each for each in os.listdir(folder) if each.endswith(tag)]
-#results=results.sort()
+
 
 print(results)
-
 for iy in range(0,len(results)):
         nameFile=results[iy]
 
@@ -23,8 +22,10 @@ for iy in range(0,len(results)):
         #xl = pd.ExcelFile(nameFile)
        # xl = pd.read_csv(nameFile)
        # print(xl)
-        df = np.genfromtxt(nameFile, delimiter="\t")
-    #
+        try:
+                df = np.genfromtxt(nameFile, delimiter="\t")
+        except:
+                df = pd.read_excel(nameFile, delimiter="\t")
         column = df[:,1]
         columnMean = df[:,2]
         columnStdev = df[:,3]
@@ -59,23 +60,12 @@ for iy in range(0,len(results)):
         #rl=np.argwhere(np.isnan(values)==True)
         #loc1=rl[-2]
         #loc2=rl[-1]
-        newrow = ['MeanValuePerArea: ',averVPS,'','','','']
+        #newrow = ['MeanValuePerArea: ',averVPS,'','','','']
 
 
 
               #    'TotalArea: ', areaSum, 'TotalValue: ', valueSum]
         
-        A = np.vstack([df, newrow])
-
-        newrow=['TotalArea: ', sumReg, '','','','']
-        A = np.vstack([A, newrow])
-
-        newrow=['TotalValue: ', sumPix, '','','','']
-        A = np.vstack([A, newrow])
-        
-        newrow=['MeanValue: ', np.mean(cPixel), '','','','']
-        A = np.vstack([A, newrow])
-
             
         outString='processed '+nameFile+'.xlsx'
         print(outString)
