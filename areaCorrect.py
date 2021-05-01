@@ -31,8 +31,10 @@ for iy in range(0,len(results)):
                 columnMax = df[:,5]
         except:
                 df = pd.read_excel(nameFile, delimiter="\t")
-                column = df.iloc[:,0]
-                columnMean = df.iloc[:,1]
+                column = df.iloc[:,1]
+               # print(column)
+                columnMean = df.iloc[:,2]
+              #  print(columnMean)
                 columnStdev = df.iloc[:,2]
                 columnMin = df.iloc[:,3]
                 columnMax = df.iloc[:,4]
