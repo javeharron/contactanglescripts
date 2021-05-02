@@ -38,7 +38,7 @@ for iy in range(0,len(results)):
 data={
         'Name':nameList,
         'MeanVPA':vpaList,
-        'MeanArea':areaList
+        'MeanValue':areaList
 
         }
 
