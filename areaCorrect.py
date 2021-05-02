@@ -30,7 +30,7 @@ for iy in range(0,len(results)):
                 columnMin = df[:,4]
                 columnMax = df[:,5]
         except:
-                df = pd.read_excel(nameFile, delimiter="\t")
+                df = pd.read_excel(nameFile)
                 column = df.iloc[:,1]
                # print(column)
                 columnMean = df.iloc[:,2]
