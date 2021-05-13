@@ -19,6 +19,7 @@ print(results)
 nameList=list()
 vpaList=list()
 areaList=list()
+totalAreaList=list()
 
 for iy in range(0,len(results)):
         nameFile=results[iy]
@@ -30,15 +31,18 @@ for iy in range(0,len(results)):
        # print(dfO)
         meanVPA=dfO.iloc[0,3]
         meanArea=dfO.iloc[2,3]
+        totalArea=dfO.iloc[1,3]
         nameList.append(nameFile)
         vpaList.append(meanVPA)
         areaList.append(meanArea)
+        totalAreaList.append(totalArea)
 #        print(meanArea)
 
 data={
         'Name':nameList,
-        'MeanVPA':vpaList,
-        'MeanValue':areaList
+        'Mean VPA':vpaList,
+        'Mean Value':areaList,
+        'Total Area':totalAreaList
 
         }
 
