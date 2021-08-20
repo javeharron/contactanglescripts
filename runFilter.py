@@ -63,9 +63,14 @@ for i in range(0,len(results)):
         #rl=np.argwhere(np.isnan(values)==True)
         #loc1=rl[-2]
         #loc2=rl[-1]
-
-        df.loc[(lenVec+1)] = ['','','','Average:','','']
-        df.loc[(lenVec+2)] = ['','','',meanVal,'','']
+        try:
+            df.loc[(lenVec+1)] = ['','','','Average:','','']
+            df.loc[(lenVec+2)] = ['','','',meanVal,'','']
+        except:
+            df = df.drop(df.columns[[0]], axis=1)
+            #del df['Unnamed']
+            df.loc[(lenVec+1)] = ['','','','Average:','','']
+            df.loc[(lenVec+2)] = ['','','',meanVal,'','']
        # df.loc[(lenVec+3)] = ['','','','Stand Dev:','','']
        # df.loc[(lenVec+4)] = ['','','',np.std(nr),'','']
 
